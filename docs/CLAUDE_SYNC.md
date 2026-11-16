@@ -16,7 +16,7 @@ Ergebnis-Felder:
 - `scrape_veraltet`: `true`, wenn die Aktionen seit über 30 Stunden nicht erfolgreich aktualisiert wurden
 - `letzter_fehler`, `aktionen_gueltig`, `letzter_scrape_ok`
 
-**Wenn `zu_synchronisieren` leer ist und `scrape_veraltet` = false → mit «Nichts zu tun.» antworten und sofort aufhören.**
+**Wenn `zu_synchronisieren` und `laeden_recherche` leer sind und `scrape_veraltet` = false → mit «Nichts zu tun.» antworten und sofort aufhören.**
 Keine weiteren Tool-Aufrufe, keine Dateien lesen.
 
 ## Schritt 2 – Nur falls `scrape_veraltet` = true
@@ -123,3 +123,26 @@ where user_id = '<id>';
 - Keine Benutzerdaten (Einkaufsliste, eigene Rezepte) lesen oder ändern – nur `einstellungen` und die
   öffentlichen Tabellen `rezepte_vorschlaege` und `grundsortiment`.
 - Keine E-Mail-Adressen oder andere persönliche Daten ausgeben.
+
+## Schritt 4 – Lokale Metzgereien & Hofläden (nur wenn `laeden_recherche` nicht leer)
+
+`laeden_recherche` enthält Postleitzahlen, für die es noch keine (oder über 30 Tage alte) Einträge gibt.
+Den Umkreis findest du in `einstellungen.daten->>'umkreis'` (km, Standard 15).
+
+Für jede PLZ mit der Websuche (WebSearch/WebFetch) **5–10** Bezugsquellen für gutes, faires und möglichst
+günstiges Fleisch suchen: Metzgereien, Hofläden/Direktvermarkter (Fleisch-Mischpakete), Bauernhöfe, Wochenmärkte,
+Grossmetzgereien mit Detailverkauf. Nur Angaben übernehmen, die du auf einer Quelle gesehen hast; nichts erfinden.
+Preisniveau nur angeben, wenn belegt (z.B. Preisliste online), sonst `null`.
+
+```sql
+delete from public.lokale_laeden where such_plz = '<plz>';
+insert into public.lokale_laeden
+  (such_plz, name, typ, adresse, plz, ort, distanz_km, website, telefon, oeffnungszeiten, angebot, preisniveau, hinweise, quelle)
+values ('<plz>', 'Metzgerei Muster', 'Metzgerei', 'Dorfstrasse 1', '8000', 'Musterort', 3.5,
+        'https://…', '044 …', 'Di–Sa', 'Schweizer Fleisch aus der Region, Mischpakete', 'Hackfleisch ca. Fr. 2.20/100 g',
+        'Wochenaktionen auf der Website', 'https://… (Quelle)');
+```
+
+- `typ`: Metzgerei, Hofladen, Bauernhof, Markt oder Grossmetzgerei
+- `distanz_km`: grobe Luftlinie von der PLZ (darf geschätzt sein, `null` wenn unbekannt)
+- In der Nachricht an den Benutzer kurz erwähnen, wie viele Bezugsquellen gefunden wurden.

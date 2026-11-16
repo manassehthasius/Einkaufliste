@@ -120,6 +120,8 @@ const STANDARD = {
   bilder: true,
   design: "auto",
   gruppierung: "laden",
+  plz: "",
+  umkreis: 15,
 };
 
 /* ------------------------------------------------------------------ */
@@ -137,6 +139,7 @@ const S = {
   rezepte: [],
   meine: [],
   liste: [],
+  lokaleLaeden: [],
   geladen: false,
   index: new Map(),
   ui: {
@@ -148,6 +151,7 @@ const S = {
     habe: {},
     schritte: {},
     editor: null,
+    plan: null,
     nachrichtGesehen: lokal.get("nachricht_gesehen", ""),
   },
 };
@@ -254,8 +258,16 @@ async function ladePrivat() {
       await speichereEinstellungen(false);
     }
   }
+  await ladeLokaleLaeden();
   wendeDesignAn();
   baueIndex();
+}
+
+async function ladeLokaleLaeden() {
+  S.lokaleLaeden = [];
+  if (!S.user || !/^\d{4}$/.test(S.einst.plz || "")) return;
+  const { data } = await sb.from("lokale_laeden").select("*").eq("such_plz", S.einst.plz).order("distanz_km", { nullsFirst: false });
+  S.lokaleLaeden = (data || []).filter((l) => l.distanz_km == null || l.distanz_km <= (S.einst.umkreis || 999));
 }
 
 // Lokale Daten nach dem ersten Login in die Cloud übernehmen
@@ -696,7 +708,7 @@ function viewAktionen() {
   const laeden = S.einst.laeden;
   const ohneAuto = laeden.filter((l) => OHNE_AUTO_AKTIONEN.includes(l));
   return `
-    <div class="kopfzeile"><h1>Aktuelle Aktionen</h1></div>
+    <div class="kopfzeile"><h1>Aktuelle Aktionen</h1><a class="btn klein" href="#/fleisch">🥩 Fleisch lokal</a></div>
     <p class="klein">${esc(standText())}. Wird automatisch 2× täglich aktualisiert.</p>
     ${ohneAuto.length ? `<div class="hinweis">ℹ️ Für <strong>${ohneAuto.map(esc).join(", ")}</strong> gibt es keine automatisch abrufbare Quelle. Die Wochenangebote findest du direkt bei ${ohneAuto.map((l) => `<a href="${LADEN_LINKS[l]}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join(", ")} – du kannst sie dann auf der Einkaufsliste mit Laden und Preis eintragen.</div>` : ""}
     <div class="karte">
@@ -772,7 +784,7 @@ function viewRezepte() {
   const f = S.ui.rez;
   const kats = ["alle", ...REZEPT_KATEGORIEN.filter((k) => S.rezepte.some((r) => r.kategorie === k))];
   return `
-    <div class="kopfzeile"><h1>Rezepte für Anfänger</h1><a class="btn klein" href="#/basics">👩‍🍳 Küchen-Basics</a></div>
+    <div class="kopfzeile"><h1>Rezepte für Anfänger</h1><div class="zeile"><a class="btn klein primaer" href="#/einkauf">📸 Rezept → Einkauf</a><a class="btn klein" href="#/basics">👩‍🍳 Küchen-Basics</a></div></div>
     <p class="gedaempft">Einfach, gesund und günstig – sortiert danach, was zu dir passt und welche Zutaten gerade in Aktion sind.</p>
     <div class="karte">
       <div class="chips chips-scroll" role="group" aria-label="Kategorie">
@@ -898,7 +910,7 @@ function viewRezeptDetail(id, eigene) {
 function viewMeine() {
   const f = S.ui.meine;
   return `
-    <div class="kopfzeile"><h1>Meine Rezepte</h1><a class="btn primaer" href="#/neu">＋ Neues Rezept</a></div>
+    <div class="kopfzeile"><h1>Meine Rezepte</h1><div class="zeile"><a class="btn" href="#/einkauf">📸 Rezept → Einkauf</a><a class="btn primaer" href="#/neu">＋ Neues Rezept</a></div></div>
     ${S.user ? "" : `<div class="hinweis">💾 Du bist nicht angemeldet – deine Rezepte werden nur auf diesem Gerät gespeichert. <a href="#/einstellungen">Jetzt anmelden</a>, um sie auf Handy und PC zu synchronisieren.</div>`}
     ${S.meine.length ? `<div class="karte">
       <div class="feldgruppe"><div><label for="meine-q">Suche</label><input id="meine-q" type="search" value="${esc(f.q)}" placeholder="Titel oder Zutat" data-eingabe="meine-q"></div></div>
@@ -1095,6 +1107,15 @@ function viewEinstellungen() {
       </section>
 
       <section class="karte">
+        <h2>📍 Lokal einkaufen (Fleisch)</h2>
+        <p class="klein">Claude sucht für deine Region Metzgereien, Hofläden und Bauernhöfe mit gutem, fairem Fleisch – inklusive Preisniveau und Angebot – und prüft sie alle 30 Tage neu. Gespeichert wird nur die Postleitzahl.</p>
+        <div class="feldgruppe">
+          <div class="feld"><label for="e-plz">Postleitzahl</label><input id="e-plz" name="plz" type="text" inputmode="numeric" pattern="\\d{4}" maxlength="4" value="${esc(e.plz)}" placeholder="z.B. 8004"></div>
+          <div class="feld"><label for="e-umkreis">Umkreis (km)</label><input id="e-umkreis" name="umkreis" type="number" min="1" max="100" value="${esc(e.umkreis)}"></div>
+        </div>
+      </section>
+
+      <section class="karte">
         <h2>🏠 Haushalt & Budget</h2>
         <div class="feldgruppe">
           <div class="feld"><label for="e-pers">Personen im Haushalt</label><input id="e-pers" name="personen" type="number" min="1" max="12" value="${esc(e.personen)}"></div>
@@ -1178,6 +1199,8 @@ function leseEinstellungen(form) {
     bilder: fd.get("bilder") === "on",
     design: fd.get("design") || "auto",
     gruppierung: fd.get("gruppierung") || "laden",
+    plz: String(fd.get("plz") || "").trim().slice(0, 4),
+    umkreis: Math.max(1, Number(fd.get("umkreis")) || 15),
   };
   S.meta.wuensche = String(fd.get("wuensche") || "");
   S.ui.akt.gesund = null;
@@ -1249,6 +1272,156 @@ function viewBasics() {
 }
 
 /* ------------------------------------------------------------------ */
+/* Seite: Rezept → Einkauf (Foto, Text oder Link)                      */
+/* ------------------------------------------------------------------ */
+
+const FLEISCH_KEYS = ["poulet", "hackfleisch", "rind", "schwein", "lamm", "kalb", "wurst"];
+
+// Passende Produkte für eine Zutat: Aktionen (live), Grundsortiment (Richtpreis), lokale Läden (Fleisch)
+function produkteFuer(z) {
+  const woerter = z.name.toLowerCase().replace(/\(.*?\)/g, "").split(/[^a-zäöüéèà]+/).filter((w) => w.length >= 4);
+  const passend = S.aktionen.filter((a) => aktionPasst(a, { gesundMin: 1 }) && !KEINE_ZUTAT.test(a.titel) &&
+    ((z.key && a.tags?.includes(z.key)) || (!z.key && woerter.some((w) => a.titel.toLowerCase().includes(w)))));
+  passend.sort((a, b) => Number(istGueltigJetzt(b)) - Number(istGueltigJetzt(a)) || b.gesund - a.gesund || (b.rabatt_prozent ?? 0) - (a.rabatt_prozent ?? 0));
+  const grund = S.grund.find((g) => z.key && g.tags?.includes(z.key));
+  const lokal = FLEISCH_KEYS.includes(z.key) ? S.lokaleLaeden.slice(0, 3) : [];
+  return { aktionen: passend.slice(0, 3), grund, lokal };
+}
+
+function viewPlan() {
+  const p = S.ui.plan ?? (S.ui.plan = { tab: "foto", text: "", url: "", status: "", rezept: null, wahl: {} });
+  const eingabe = p.tab === "foto" ? `
+      <p>Fotografiere ein Rezept (Kochbuch, Zeitschrift, Bildschirm) oder wähle ein Bild aus. Der Text wird <strong>kostenlos direkt auf deinem Gerät</strong> erkannt – nichts wird hochgeladen.</p>
+      <label class="btn primaer voll">📷 Foto aufnehmen oder auswählen<input type="file" accept="image/*" data-aktion="plan-foto" class="sr-only"></label>
+      <small>Funktioniert am besten mit gedrucktem Text, gerade fotografiert und gut beleuchtet. Handschrift wird oft nicht erkannt.</small>`
+    : p.tab === "text" ? `
+      <div class="feld"><label for="plan-text">Rezepttext</label><textarea id="plan-text" style="min-height:200px" placeholder="Rezept hier einfügen …">${esc(p.text)}</textarea></div>
+      <button class="btn primaer voll" data-aktion="plan-text">✨ Zusammenstellen</button>`
+    : `
+      ${S.user ? "" : `<div class="hinweis gelb">Der Import per Link braucht ein Login. <a href="#/einstellungen">Anmelden</a></div>`}
+      <div class="feld"><label for="plan-url">Link zum Rezept</label><input id="plan-url" type="url" value="${esc(p.url)}" placeholder="https://…"></div>
+      <button class="btn primaer voll" data-aktion="plan-link" ${S.user ? "" : "disabled"}>🔗 Zusammenstellen</button>`;
+  return `
+    <p><a href="#/rezepte">← Rezepte</a></p>
+    <h1>Rezept → Einkauf</h1>
+    <p class="gedaempft">Schick ein Rezept als Foto, Text oder Link. Ich erkenne die Zutaten und suche dir die passenden Produkte – mit aktuellen Aktionen, Richtpreisen und lokalen Metzgereien.</p>
+    <div class="tabs" role="tablist">${[["foto", "📸 Foto"], ["text", "📋 Text"], ["link", "🔗 Link"]].map(([t, l]) => `<button role="tab" aria-selected="${p.tab === t}" class="${p.tab === t ? "aktiv" : ""}" data-aktion="plan-tab" data-tab="${t}">${l}</button>`).join("")}</div>
+    <div class="karte">${eingabe}${p.status ? `<p class="hinweis" style="margin-top:12px">${esc(p.status)}</p>` : ""}</div>
+    ${p.rezept ? planErgebnis(p) : ""}`;
+}
+
+function planErgebnis(p) {
+  const r = p.rezept;
+  const zeilen = r.zutaten.map((z, i) => {
+    if (z.basis) return `<div class="zutat basis"><span class="menge">${esc([z.menge != null ? formatMenge(z.menge) : "", z.einheit].filter(Boolean).join(" "))}</span><span class="name">${esc(z.name)}</span></div>`;
+    const pr = produkteFuer(z);
+    const wahl = p.wahl[i] ?? (pr.aktionen[0] ? "a:" + pr.aktionen[0].id : "g");
+    const opt = [
+      ...pr.aktionen.map((a) => `<label class="check" style="font-weight:400"><input type="radio" name="w${i}" value="a:${a.id}" ${wahl === "a:" + a.id ? "checked" : ""} data-aktion="plan-wahl" data-i="${i}">
+        <span>${ladenBadge(a.laden)} ${esc(a.titel)} – <strong>${chf(a.preis)}</strong> ${a.rabatt_prozent ? `<span class="badge rabatt">−${a.rabatt_prozent}%</span>` : ""} <span class="klein">${esc(gueltigText(a))}</span></span></label>`),
+      `<label class="check" style="font-weight:400"><input type="radio" name="w${i}" value="g" ${wahl === "g" ? "checked" : ""} data-aktion="plan-wahl" data-i="${i}">
+        <span>${pr.grund ? `Günstige Eigenmarke: ${esc(pr.grund.name)} · ca. ${chf(pr.grund.preis_min)}–${Number(pr.grund.preis_max).toFixed(2)} (${esc(pr.grund.laeden || "")})` : "Ohne bestimmtes Produkt"}</span></label>`,
+      ...pr.lokal.map((l) => `<label class="check" style="font-weight:400"><input type="radio" name="w${i}" value="l:${l.id}" ${wahl === "l:" + l.id ? "checked" : ""} data-aktion="plan-wahl" data-i="${i}">
+        <span>🥩 <strong>${esc(l.name)}</strong> (${esc(l.typ)}${l.distanz_km != null ? `, ${l.distanz_km} km` : ""}) ${l.preisniveau ? `· ${esc(l.preisniveau)}` : ""}</span></label>`),
+      `<label class="check" style="font-weight:400"><input type="radio" name="w${i}" value="habe" ${wahl === "habe" ? "checked" : ""} data-aktion="plan-wahl" data-i="${i}"><span>Habe ich schon</span></label>`,
+    ].join("");
+    const fleischHinweis = FLEISCH_KEYS.includes(z.key) && !pr.lokal.length
+      ? `<small>🥩 Tipp: ${/^\d{4}$/.test(S.einst.plz || "") ? "Lokale Metzgereien werden für deine Region gerade gesucht (beim nächsten täglichen Lauf)." : `<a href="#/einstellungen">PLZ eintragen</a>, damit ich dir lokale Metzgereien suche.`}</small>` : "";
+    return `<div class="zutat" style="flex-direction:column;gap:6px">
+      <div><strong>${esc([z.menge != null ? formatMenge(z.menge) : "", z.einheit].filter(Boolean).join(" "))}</strong> ${esc(z.name)}</div>
+      <div class="spalte" style="gap:4px;padding-left:4px">${opt}</div>${fleischHinweis}</div>`;
+  }).join("");
+  return `<section class="karte">
+    <h2>${esc(r.titel)}</h2>
+    <p class="klein">${r.zutaten.length} Zutaten erkannt${r.portionen ? ` · ${r.portionen} Portionen` : ""}. Wähle pro Zutat das Produkt – die beste Aktion ist vorausgewählt.</p>
+    ${zeilen}
+    <div class="zeile" style="margin-top:12px">
+      <button class="btn primaer" style="flex:1" data-aktion="plan-liste">🛒 Auf die Einkaufsliste</button>
+      <button class="btn" style="flex:1" data-aktion="plan-speichern">📖 Als Rezept speichern</button>
+    </div>
+  </section>`;
+}
+
+function planSetzen(r) {
+  const zutaten = (r.zutaten || []).map((z) => (typeof z === "string" ? parseZutatSicher(z) : z)).filter(Boolean);
+  S.ui.plan.rezept = { ...r, zutaten, schritte: r.schritte || [] };
+  S.ui.plan.wahl = {};
+  S.ui.plan.status = zutaten.length ? "" : "Ich habe keine Zutaten erkannt. Versuche ein schärferes Foto oder füge den Text ein.";
+}
+function parseZutatSicher(s) { return zutatenAusText(s)[0] || null; }
+
+let tesseractLaden;
+async function texterkennung(datei) {
+  if (!window.Tesseract) {
+    tesseractLaden ??= new Promise((ok, fehler) => {
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+      s.onload = ok; s.onerror = () => fehler(new Error("Texterkennung konnte nicht geladen werden"));
+      document.head.appendChild(s);
+    });
+    await tesseractLaden;
+  }
+  const { data } = await window.Tesseract.recognize(datei, "deu", {
+    logger: (m) => { if (m.status === "recognizing text") { S.ui.plan.status = `Text wird erkannt … ${Math.round(m.progress * 100)}%`; const h = $(".karte .hinweis"); if (h) h.textContent = S.ui.plan.status; } },
+  });
+  return data.text;
+}
+
+async function planAufListe() {
+  const p = S.ui.plan, r = p.rezept, zeilen = [];
+  r.zutaten.forEach((z, i) => {
+    if (z.basis) return;
+    const pr = produkteFuer(z);
+    const wahl = p.wahl[i] ?? (pr.aktionen[0] ? "a:" + pr.aktionen[0].id : "g");
+    if (wahl === "habe" || aufListe(z.name)) return;
+    const menge = [z.menge != null ? formatMenge(z.menge) : "", z.einheit].filter(Boolean).join(" ") || null;
+    const quelle = `Rezept: ${r.titel}`;
+    if (wahl.startsWith("a:")) {
+      const a = S.aktionen.find((x) => "a:" + x.id === wahl);
+      if (a) return zeilen.push({ ...artikelAusAktion(a), name: `${z.name} – ${a.titel}`, menge, quelle: "Aktion" });
+    }
+    if (wahl.startsWith("l:")) {
+      const l = S.lokaleLaeden.find((x) => "l:" + x.id === wahl);
+      if (l) return zeilen.push({ name: z.name, menge, laden: l.name, kategorie: "Fleisch", preis: null, aktion_id: null, quelle });
+    }
+    zeilen.push({ name: z.name, menge, laden: "", kategorie: pr.grund?.kategorie || null, preis: null, aktion_id: null, quelle });
+  });
+  if (!zeilen.length) return toast("Nichts hinzuzufügen");
+  await artikelHinzufuegen(zeilen, `${zeilen.length} Produkte für «${r.titel}» hinzugefügt`);
+}
+
+/* ------------------------------------------------------------------ */
+/* Seite: Fleisch lokal                                                */
+/* ------------------------------------------------------------------ */
+
+function viewFleisch() {
+  const fleischAktionen = S.aktionen.filter((a) => a.kategorie === "Fleisch" && aktionPasst(a, { gesundMin: 2 }))
+    .sort((a, b) => (b.rabatt_prozent ?? 0) - (a.rabatt_prozent ?? 0)).slice(0, 12);
+  const plzOk = /^\d{4}$/.test(S.einst.plz || "");
+  const lokal = !S.user ? `<div class="hinweis gelb"><a href="#/einstellungen">Melde dich an</a> und trage deine PLZ ein, damit ich dir lokale Metzgereien und Hofläden suche.</div>`
+    : !plzOk ? `<div class="hinweis gelb"><a href="#/einstellungen">Trage in den Einstellungen deine PLZ ein</a> – dann suche ich beim nächsten täglichen Lauf Metzgereien und Hofläden in deiner Nähe.</div>`
+    : !S.lokaleLaeden.length ? `<div class="hinweis">🔎 Für ${esc(S.einst.plz)} (Umkreis ${esc(S.einst.umkreis)} km) suche ich beim nächsten täglichen Lauf (ca. ${CLAUDE_SYNC_ZEIT} Uhr) nach Metzgereien und Hofläden.</div>`
+    : S.lokaleLaeden.map((l) => `<article class="karte" style="margin-bottom:10px">
+        <div class="kopfzeile" style="margin-bottom:4px"><h3 style="margin:0">${esc(l.name)}</h3><span class="badge">${esc(l.typ)}${l.distanz_km != null ? ` · ${l.distanz_km} km` : ""}</span></div>
+        <p class="klein">${esc([l.adresse, [l.plz, l.ort].filter(Boolean).join(" ")].filter(Boolean).join(", "))}</p>
+        ${l.angebot ? `<p>${esc(l.angebot)}</p>` : ""}
+        <div class="zeile">${l.preisniveau ? `<span class="badge gruen">💰 ${esc(l.preisniveau)}</span>` : ""}${l.oeffnungszeiten ? `<span class="badge">🕒 ${esc(l.oeffnungszeiten)}</span>` : ""}</div>
+        ${l.hinweise ? `<p class="klein" style="margin-top:6px">💡 ${esc(l.hinweise)}</p>` : ""}
+        <div class="zeile" style="margin-top:8px">${sichereUrl(l.website) ? `<a class="btn klein" href="${esc(sichereUrl(l.website))}" target="_blank" rel="noopener">Website ↗</a>` : ""}${l.telefon ? `<a class="btn klein" href="tel:${esc(l.telefon.replace(/\s/g, ""))}">📞 ${esc(l.telefon)}</a>` : ""}</div>
+        <p class="klein" style="margin-top:6px">Geprüft am ${esc(datumKurz(l.geprueft_am))}</p>
+      </article>`).join("");
+  return `
+    <p><a href="#/aktionen">← Aktionen</a></p>
+    <h1>🥩 Gutes Fleisch – günstig & lokal</h1>
+    <p class="gedaempft">Lokale Metzgereien und Hofläden in deiner Nähe, dazu die besten Fleisch-Aktionen der Grossverteiler.</p>
+    <h2>In deiner Nähe</h2>
+    ${lokal}
+    <div class="hinweis gruen"><strong>Spartipps für gutes Fleisch:</strong> Bei Metzgereien nach günstigeren Stücken fragen (Schulter, Hals, Siedfleisch, Hackfleisch, ganze Poulets) · Grössere Mengen kaufen und portionsweise einfrieren · Viele Hofläden verkaufen «Mischpakete» (5–10 kg) deutlich günstiger · Auf Labels achten: IP-SUISSE, Bio Suisse, Natura-Beef.</div>
+    <h2>Fleisch-Aktionen diese Woche</h2>
+    <div class="raster aktionen-raster">${fleischAktionen.map(aktionKarte).join("") || "<p>Keine passenden Aktionen.</p>"}</div>`;
+}
+
+/* ------------------------------------------------------------------ */
 /* Router & Rendering                                                  */
 /* ------------------------------------------------------------------ */
 
@@ -1261,7 +1434,7 @@ function route() {
 
 function render() {
   const [seite, param] = route();
-  const navSeite = { rezept: "rezepte", basics: "rezepte", neu: "meine", bearbeiten: "meine" }[seite] || seite;
+  const navSeite = { rezept: "rezepte", basics: "rezepte", neu: "meine", bearbeiten: "meine", einkauf: "rezepte", fleisch: "aktionen" }[seite] || seite;
   document.querySelectorAll("[data-nav]").forEach((a) => {
     a.classList.toggle("aktiv", a.dataset.nav === navSeite);
     if (a.dataset.nav === navSeite) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
@@ -1277,9 +1450,11 @@ function render() {
     bearbeiten: () => viewEditor(param),
     einstellungen: () => viewEinstellungen(),
     basics: () => viewBasics(),
+    einkauf: () => viewPlan(),
+    fleisch: () => viewFleisch(),
   };
   app.innerHTML = (views[seite] || views.liste)();
-  const titel = { liste: "Einkaufsliste", aktionen: "Aktionen", rezepte: "Rezepte", rezept: "Rezept", meine: "Meine Rezepte", neu: "Neues Rezept", bearbeiten: "Rezept bearbeiten", einstellungen: "Einstellungen", basics: "Küchen-Basics" }[seite] || "Einkaufsliste";
+  const titel = { liste: "Einkaufsliste", aktionen: "Aktionen", rezepte: "Rezepte", rezept: "Rezept", meine: "Meine Rezepte", neu: "Neues Rezept", bearbeiten: "Rezept bearbeiten", einstellungen: "Einstellungen", basics: "Küchen-Basics", einkauf: "Rezept → Einkauf", fleisch: "Fleisch lokal" }[seite] || "Einkaufsliste";
   document.title = `${titel} · Einkaufsliste`;
 }
 
@@ -1438,6 +1613,33 @@ document.addEventListener("click", async (ev) => {
       catch (e) { fehlerZeigen(e, "Speichern fehlgeschlagen"); }
       break;
     }
+    case "plan-tab": S.ui.plan.text = $("#plan-text")?.value ?? S.ui.plan.text; S.ui.plan.url = $("#plan-url")?.value ?? S.ui.plan.url; S.ui.plan.tab = el.dataset.tab; render(); break;
+    case "plan-text": {
+      const t = $("#plan-text").value;
+      if (!t.trim()) return toast("Bitte zuerst ein Rezept einfügen");
+      S.ui.plan.text = t; planSetzen(parseRezeptText(t)); render();
+      break;
+    }
+    case "plan-link": {
+      const url = sichereUrl($("#plan-url").value.trim());
+      if (!url) return toast("Bitte einen gültigen Link eingeben");
+      S.ui.plan.url = url; S.ui.plan.status = "⏳ Rezept wird geladen …"; render();
+      try {
+        const { data, error } = await sb.functions.invoke("rezept-import", { body: { url } });
+        if (error) throw error;
+        if (!data?.ok) throw new Error(data?.fehler || "Kein Rezept gefunden");
+        planSetzen({ ...data.rezept, quelle_url: url });
+      } catch (e) { S.ui.plan.status = `Import fehlgeschlagen: ${e.message}`; }
+      render();
+      break;
+    }
+    case "plan-liste": await planAufListe(); break;
+    case "plan-speichern": {
+      const r = S.ui.plan.rezept;
+      S.ui.editor = { schluessel: "neu", tab: "formular", entwurf: entwurfAusErkannt(r), text: "", url: "", laeuft: false };
+      location.hash = "#/neu";
+      break;
+    }
     case "abmelden": await sb.auth.signOut(); toast("Abgemeldet"); break;
     case "aktionen-jetzt": {
       el.disabled = true; el.textContent = "⏳ Wird aktualisiert …";
@@ -1489,6 +1691,20 @@ document.addEventListener("change", async (ev) => {
     case "akt-gesund": S.ui.akt.gesund = el.checked; $("#ergebnisse").innerHTML = aktionenErgebnisse(); break;
     case "rez-zeiten": S.ui.rez.alleZeiten = el.checked; $("#ergebnisse").innerHTML = rezeptErgebnisse(); break;
     case "meine-fav": S.ui.meine.nurFav = el.checked; $("#ergebnisse").innerHTML = meineErgebnisse(); break;
+    case "plan-wahl": S.ui.plan.wahl[el.dataset.i] = el.value; break;
+    case "plan-foto": {
+      const datei = el.files?.[0];
+      if (!datei) break;
+      S.ui.plan.status = "⏳ Texterkennung wird geladen (beim ersten Mal ca. 10–20 Sekunden) …"; S.ui.plan.rezept = null; render();
+      try {
+        const text = await texterkennung(datei);
+        S.ui.plan.text = text;
+        planSetzen(parseRezeptText(text));
+        if (S.ui.plan.rezept.zutaten.length) S.ui.plan.status = "✅ Erkannt – prüfe die Zutaten. Den erkannten Text kannst du im Tab «Text» korrigieren.";
+      } catch (e) { S.ui.plan.status = `Texterkennung fehlgeschlagen: ${e.message}`; }
+      render();
+      break;
+    }
     case "import": {
       const datei = el.files?.[0];
       if (!datei) break;
@@ -1535,7 +1751,7 @@ document.addEventListener("submit", async (ev) => {
     case "rezept-speichern": await rezeptSpeichern(); break;
     case "einstellungen": {
       leseEinstellungen(form);
-      try { await speichereEinstellungen(false); toast("Einstellungen gespeichert"); render(); }
+      try { await speichereEinstellungen(false); await ladeLokaleLaeden(); toast("Einstellungen gespeichert"); render(); }
       catch (e) { fehlerZeigen(e, "Speichern fehlgeschlagen"); }
       break;
     }
