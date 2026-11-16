@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Einkaufsliste</title>
+  <meta name="description" content="Gesund und günstig einkaufen in der Schweiz – Einkaufsliste mit aktuellen Aktionen von Migros, Coop, Lidl, Denner und mehr, Anfänger-Rezepten und eigenen Rezepten.">
+  <meta name="theme-color" content="#2f7d4f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="kopf">
+    <a class="marke" href="#/liste" aria-label="Zur Einkaufsliste">
+      <img src="assets/icon.svg" alt="" width="28" height="28">
+      <span>Einkaufsliste</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#/liste" data-nav="liste"><span class="ico" aria-hidden="true">🛒</span><span>Liste</span></a>
+      <a href="#/aktionen" data-nav="aktionen"><span class="ico" aria-hidden="true">🏷️</span><span>Aktionen</span></a>
+      <a href="#/rezepte" data-nav="rezepte"><span class="ico" aria-hidden="true">🍲</span><span>Rezepte</span></a>
+      <a href="#/meine" data-nav="meine"><span class="ico" aria-hidden="true">📖</span><span>Meine</span></a>
+      <a href="#/einstellungen" data-nav="einstellungen"><span class="ico" aria-hidden="true">⚙️</span><span>Einstellungen</span></a>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <div class="laden-hinweis">Lädt …</div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="assets/app.js"></script>
+  <noscript><p style="padding:16px">Bitte JavaScript aktivieren, um die Einkaufsliste zu nutzen.</p></noscript>
+</body>
+</html>

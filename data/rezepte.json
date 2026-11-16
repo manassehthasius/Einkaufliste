@@ -1,0 +1,501 @@
+{
+  "stand": "2026-11-16",
+  "hinweis": "Anfänger-Rezepte. Zutaten mit \"basis\": true sind Vorrat (Salz, Öl, Gewürze) und kommen nicht automatisch auf die Einkaufsliste. Kosten pro Portion sind Richtwerte.",
+  "rezepte": [
+    {
+      "id": "overnight-oats",
+      "titel": "Overnight Oats mit Apfel & Zimt",
+      "beschreibung": "Frühstück, das sich über Nacht selbst macht. Kein Kochen, kein Stress am Morgen.",
+      "kategorie": "Frühstück",
+      "portionen": 1,
+      "zeit_min": 5,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 1.1,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 50, "einheit": "g", "name": "Haferflocken", "key": "haferflocken" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt", "key": "joghurt" },
+        { "menge": 80, "einheit": "ml", "name": "Milch", "key": "milch" },
+        { "menge": 1, "einheit": "", "name": "Apfel", "key": "aepfel" },
+        { "menge": 1, "einheit": "EL", "name": "Nüsse oder Mandeln", "key": "nuesse" },
+        { "menge": 1, "einheit": "Prise", "name": "Zimt", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Haferflocken, Joghurt und Milch in ein Glas oder eine Box mit Deckel geben und gut umrühren.",
+        "Apfel waschen, vierteln, das Kerngehäuse herausschneiden und den Apfel in kleine Würfel schneiden (oder grob raffeln). Zu den Haferflocken geben und Zimt darüberstreuen.",
+        "Deckel drauf und über Nacht (mindestens 4 Stunden) in den Kühlschrank stellen.",
+        "Am Morgen umrühren. Nüsse grob hacken und darüberstreuen. Fertig – direkt aus dem Glas essen."
+      ],
+      "tipps": "Hält 2–3 Tage im Kühlschrank: am Sonntag gleich 3 Gläser vorbereiten. Statt Apfel gehen auch Banane oder TK-Beeren.",
+      "tags": ["schnell", "meal-prep", "ohne-kochen"]
+    },
+    {
+      "id": "ruehrei-spinat",
+      "titel": "Rührei mit Spinat auf Vollkornbrot",
+      "beschreibung": "In 10 Minuten ein warmes, eiweissreiches Essen – zum Frühstück oder als schnelles Znacht.",
+      "kategorie": "Frühstück",
+      "portionen": 1,
+      "zeit_min": 10,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 2.0,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 3, "einheit": "", "name": "Eier", "key": "eier" },
+        { "menge": 80, "einheit": "g", "name": "TK-Spinat (eine Handvoll)", "key": "spinat" },
+        { "menge": 2, "einheit": "Scheiben", "name": "Vollkornbrot", "key": "brot" },
+        { "menge": 1, "einheit": "TL", "name": "Butter oder Öl", "key": "oel", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz und Pfeffer", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Eier in eine Schüssel aufschlagen, mit einer Gabel kräftig verquirlen und mit Salz und Pfeffer würzen.",
+        "Butter oder Öl in einer beschichteten Pfanne bei mittlerer Hitze (Stufe 5–6 von 9) schmelzen.",
+        "Spinat (gefroren) in die Pfanne geben und 2–3 Minuten erwärmen, bis er aufgetaut ist und kein Wasser mehr in der Pfanne steht.",
+        "Eier dazugiessen und 20 Sekunden nichts tun. Dann mit einem Holzlöffel langsam vom Rand zur Mitte schieben, bis grosse, weiche Flocken entstehen.",
+        "Pfanne vom Herd nehmen, solange die Eier noch leicht feucht glänzen – sie garen von selbst nach.",
+        "Brot toasten und das Rührei darauf verteilen."
+      ],
+      "tipps": "Nicht zu heiss braten, sonst wird Rührei trocken und gummig. Wer mag, gibt am Schluss etwas geriebenen Käse dazu.",
+      "tags": ["schnell", "proteinreich"]
+    },
+    {
+      "id": "quark-beeren",
+      "titel": "Protein-Quark mit Beeren & Nüssen",
+      "beschreibung": "Cremig, süss und mit rund 30 g Eiweiss. Als Frühstück oder Snack nach dem Sport.",
+      "kategorie": "Frühstück",
+      "portionen": 1,
+      "zeit_min": 5,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 1.9,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 250, "einheit": "g", "name": "Magerquark", "key": "quark" },
+        { "menge": 50, "einheit": "ml", "name": "Milch", "key": "milch" },
+        { "menge": 100, "einheit": "g", "name": "TK-Beeren", "key": "beeren" },
+        { "menge": 1, "einheit": "EL", "name": "Nüsse oder Mandeln", "key": "nuesse" },
+        { "menge": 1, "einheit": "TL", "name": "Honig (optional)", "key": "honig", "basis": true }
+      ],
+      "schritte": [
+        "Beeren am Vorabend in einer Schale in den Kühlschrank stellen, damit sie auftauen (oder 1 Minute in die Mikrowelle).",
+        "Quark mit der Milch in einer Schüssel glatt rühren – so wird er schön cremig.",
+        "Beeren samt Saft darauf geben, Nüsse grob hacken und darüberstreuen. Nach Wunsch mit etwas Honig süssen."
+      ],
+      "tipps": "Magerquark ist eine der günstigsten Eiweissquellen überhaupt. Statt Beeren passt auch eine Banane.",
+      "tags": ["schnell", "proteinreich", "ohne-kochen"]
+    },
+    {
+      "id": "gemuese-omelette",
+      "titel": "Gemüse-Omelette mit Käse",
+      "beschreibung": "Resteverwertung in 10 Minuten: fast jedes Gemüse passt hinein.",
+      "kategorie": "Hauptgericht",
+      "portionen": 1,
+      "zeit_min": 12,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 2.2,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 3, "einheit": "", "name": "Eier", "key": "eier" },
+        { "menge": 2, "einheit": "EL", "name": "Milch", "key": "milch" },
+        { "menge": 0.5, "einheit": "", "name": "Peperoni", "key": "peperoni" },
+        { "menge": 3, "einheit": "", "name": "Champignons", "key": "pilze" },
+        { "menge": 30, "einheit": "g", "name": "Reibkäse", "key": "kaese" },
+        { "menge": 1, "einheit": "TL", "name": "Öl oder Butter", "key": "oel", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz und Pfeffer", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Peperoni waschen, Kerne entfernen und in kleine Würfel schneiden. Champignons in dünne Scheiben schneiden.",
+        "Eier mit Milch, Salz und Pfeffer in einer Schüssel verquirlen.",
+        "Öl in einer beschichteten Pfanne bei mittlerer Hitze erwärmen. Gemüse 3–4 Minuten anbraten, bis es weich ist.",
+        "Eiermasse über das Gemüse giessen und die Pfanne leicht schwenken, damit sich alles verteilt.",
+        "Bei mittlerer bis kleiner Hitze 3–4 Minuten stocken lassen, ohne zu rühren. Käse darüberstreuen.",
+        "Wenn die Oberfläche fast fest ist, das Omelette mit einem Bratenwender zur Hälfte zusammenklappen und auf den Teller gleiten lassen."
+      ],
+      "tipps": "Ein Deckel auf der Pfanne hilft, dass die Oberseite schneller fest wird. Dazu passt ein Stück Brot oder Salat.",
+      "tags": ["schnell", "proteinreich", "resteverwertung"]
+    },
+    {
+      "id": "poulet-ofengemuese",
+      "titel": "Poulet mit Ofengemüse vom Blech",
+      "beschreibung": "Alles auf ein Blech, der Ofen macht die Arbeit. Perfekt für Anfänger.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 45,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 4.8,
+      "ernaehrung": ["alles"],
+      "zutaten": [
+        { "menge": 300, "einheit": "g", "name": "Pouletbrust", "key": "poulet" },
+        { "menge": 500, "einheit": "g", "name": "Kartoffeln", "key": "kartoffeln" },
+        { "menge": 3, "einheit": "", "name": "Karotten", "key": "karotten" },
+        { "menge": 1, "einheit": "", "name": "Peperoni", "key": "peperoni" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt zum Dippen", "key": "joghurt" },
+        { "menge": 3, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": 2, "einheit": "TL", "name": "Paprikapulver, Salz, Pfeffer", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Ofen auf 200 °C Umluft (bzw. 220 °C Ober-/Unterhitze) vorheizen. Ein Backblech mit Backpapier belegen.",
+        "Kartoffeln waschen (Schale darf dran bleiben) und in ca. 2 cm grosse Würfel schneiden. Karotten schälen und in dicke Scheiben schneiden. Peperoni in Streifen, Zwiebel in Spalten schneiden.",
+        "Das ganze Gemüse aufs Blech geben, mit 2 EL Öl, 1 TL Paprika, Salz und Pfeffer mischen (mit den Händen geht es am besten) und verteilen. 20 Minuten backen.",
+        "In der Zwischenzeit das Poulet in mundgerechte Stücke schneiden und in einer Schüssel mit 1 EL Öl, Paprika, Salz und Pfeffer mischen. Danach Hände, Messer und Brett gründlich mit heissem Wasser und Seife waschen.",
+        "Blech herausnehmen, Gemüse kurz wenden, Poulet dazwischen verteilen und weitere 15–20 Minuten backen.",
+        "Das Poulet ist gar, wenn es innen weiss und nicht mehr rosa ist (einen Würfel aufschneiden). Joghurt mit etwas Salz verrühren und dazu servieren."
+      ],
+      "tipps": "Rohes Poulet nie auf demselben Brett wie Gemüse schneiden, ohne das Brett vorher zu waschen. Reste schmecken am nächsten Tag kalt als Salat.",
+      "tags": ["ofen", "proteinreich", "wenig-abwasch"]
+    },
+    {
+      "id": "one-pot-pasta",
+      "titel": "One-Pot-Pasta mit Tomaten, Spinat & Mozzarella",
+      "beschreibung": "Pasta und Sauce kochen zusammen in einem Topf – wenig Abwasch, viel Geschmack.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 20,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 2.3,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 200, "einheit": "g", "name": "Vollkornpasta (z.B. Penne)", "key": "pasta" },
+        { "menge": 1, "einheit": "Dose", "name": "Gehackte Tomaten (400 g)", "key": "tomaten" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 1, "einheit": "Zehe", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 100, "einheit": "g", "name": "TK-Spinat", "key": "spinat" },
+        { "menge": 1, "einheit": "Kugel", "name": "Mozzarella (150 g)", "key": "mozzarella" },
+        { "menge": 500, "einheit": "ml", "name": "Wasser", "key": "wasser", "basis": true },
+        { "menge": 1, "einheit": "TL", "name": "Gemüsebouillon", "key": "gewuerze", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Zwiebel und Knoblauch schälen und fein hacken.",
+        "Öl in einem grossen Topf bei mittlerer Hitze erwärmen. Zwiebel 2–3 Minuten dünsten, bis sie glasig (nicht braun) ist. Knoblauch 30 Sekunden mitdünsten.",
+        "Ungekochte Pasta, Tomaten, Wasser und Bouillon dazugeben und aufkochen lassen.",
+        "Deckel drauf, Hitze auf mittel-niedrig stellen und 10–12 Minuten köcheln. Alle 2–3 Minuten umrühren, damit nichts am Boden anklebt.",
+        "Spinat dazugeben und 2 Minuten mitkochen. Die Flüssigkeit sollte jetzt fast weg und sämig sein – sonst ohne Deckel noch kurz einkochen.",
+        "Mit Salz und Pfeffer abschmecken, Mozzarella in Stücke zupfen und darauf verteilen."
+      ],
+      "tipps": "Probiere eine Nudel, bevor du den Herd ausschaltest: Sie sollte weich sein, aber noch leichten Biss haben.",
+      "tags": ["schnell", "ein-topf", "wenig-abwasch"]
+    },
+    {
+      "id": "linsen-bolognese",
+      "titel": "Linsen-Bolognese",
+      "beschreibung": "Günstig, sättigend und voller Eiweiss. Ideal zum Vorkochen für mehrere Tage.",
+      "kategorie": "Hauptgericht",
+      "portionen": 4,
+      "zeit_min": 35,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 1.9,
+      "ernaehrung": ["alles", "vegetarisch", "vegan"],
+      "zutaten": [
+        { "menge": 200, "einheit": "g", "name": "Rote Linsen", "key": "linsen" },
+        { "menge": 2, "einheit": "", "name": "Karotten", "key": "karotten" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 2, "einheit": "Zehen", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 2, "einheit": "Dosen", "name": "Gehackte Tomaten (à 400 g)", "key": "tomaten" },
+        { "menge": 400, "einheit": "g", "name": "Vollkornspaghetti", "key": "pasta" },
+        { "menge": 40, "einheit": "g", "name": "Reibkäse (optional)", "key": "kaese" },
+        { "menge": 2, "einheit": "EL", "name": "Tomatenpüree", "key": "tomatenpueree", "basis": true },
+        { "menge": 500, "einheit": "ml", "name": "Wasser", "key": "wasser", "basis": true },
+        { "menge": 1, "einheit": "TL", "name": "Gemüsebouillon, Oregano, Salz, Pfeffer", "key": "gewuerze", "basis": true },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Linsen in einem Sieb unter kaltem Wasser abspülen, bis das Wasser klar ist.",
+        "Zwiebel und Knoblauch schälen und fein hacken. Karotten schälen und fein raffeln (Bircher-Raffel) oder sehr klein würfeln.",
+        "Öl in einem grossen Topf bei mittlerer Hitze erwärmen. Zwiebel und Karotten 5 Minuten dünsten. Knoblauch und Tomatenpüree dazugeben und 1 Minute mitrösten.",
+        "Linsen, Tomaten, Wasser, Bouillon und Oregano dazugeben, umrühren und aufkochen.",
+        "Deckel halb auflegen und 15–20 Minuten leise köcheln, ab und zu umrühren. Wird es zu dick, etwas Wasser nachgiessen. Die Linsen sind fertig, wenn sie weich sind und zerfallen.",
+        "Währenddessen in einem zweiten Topf reichlich Wasser mit 1 TL Salz aufkochen und die Spaghetti nach Packungsangabe kochen, dann abgiessen.",
+        "Sauce mit Salz und Pfeffer abschmecken und mit den Spaghetti und etwas Käse servieren."
+      ],
+      "tipps": "Die Sauce hält 4 Tage im Kühlschrank und lässt sich portionsweise einfrieren. Für die vegane Variante den Käse weglassen.",
+      "tags": ["meal-prep", "proteinreich", "guenstig"]
+    },
+    {
+      "id": "chili-con-carne",
+      "titel": "Chili con Carne",
+      "beschreibung": "Der Klassiker zum Vorkochen. Hackfleisch und Bohnen machen lange satt.",
+      "kategorie": "Hauptgericht",
+      "portionen": 4,
+      "zeit_min": 45,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 3.2,
+      "ernaehrung": ["alles"],
+      "zutaten": [
+        { "menge": 400, "einheit": "g", "name": "Hackfleisch (Rind)", "key": "hackfleisch" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 2, "einheit": "Zehen", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 1, "einheit": "", "name": "Peperoni", "key": "peperoni" },
+        { "menge": 1, "einheit": "Dose", "name": "Kidneybohnen (400 g)", "key": "bohnen" },
+        { "menge": 1, "einheit": "Dose", "name": "Mais (285 g)", "key": "mais" },
+        { "menge": 2, "einheit": "Dosen", "name": "Gehackte Tomaten (à 400 g)", "key": "tomaten" },
+        { "menge": 250, "einheit": "g", "name": "Reis", "key": "reis" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt als Topping", "key": "joghurt" },
+        { "menge": 1, "einheit": "EL", "name": "Tomatenpüree", "key": "tomatenpueree", "basis": true },
+        { "menge": 2, "einheit": "TL", "name": "Paprika, Kreuzkümmel, Chili, Salz, Pfeffer", "key": "gewuerze", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Zwiebel und Knoblauch fein hacken. Peperoni waschen, entkernen und würfeln. Bohnen und Mais in ein Sieb geben und abspülen.",
+        "Öl in einem grossen Topf bei hoher Hitze erwärmen. Hackfleisch hineingeben und 1–2 Minuten nicht rühren, damit es Farbe bekommt. Dann mit dem Kochlöffel zerkleinern und braten, bis es krümelig und überall braun ist (ca. 5–7 Minuten).",
+        "Hitze auf mittel reduzieren. Zwiebel, Knoblauch und Peperoni dazugeben und 3 Minuten mitbraten. Tomatenpüree und Gewürze (1 TL Paprika, ½ TL Kreuzkümmel, Chili nach Geschmack) kurz mitrösten.",
+        "Tomaten, Bohnen und Mais dazugeben, umrühren und aufkochen. Dann 20 Minuten mit halb offenem Deckel leise köcheln lassen, ab und zu umrühren.",
+        "Währenddessen den Reis kochen: Reis mit der doppelten Menge Wasser (250 g Reis = 500 ml) und etwas Salz aufkochen, Deckel drauf, Hitze auf die kleinste Stufe und ca. 15 Minuten quellen lassen.",
+        "Chili mit Salz und Pfeffer abschmecken und mit Reis und einem Löffel Joghurt servieren."
+      ],
+      "tipps": "Schmeckt aufgewärmt am zweiten Tag noch besser. Portionsweise einfrieren – hält 3 Monate. Vorsichtig mit Chili starten, nachwürzen geht immer.",
+      "tags": ["meal-prep", "proteinreich"]
+    },
+    {
+      "id": "gebratener-reis",
+      "titel": "Gebratener Reis mit Ei & Gemüse",
+      "beschreibung": "Aus gekochtem Reis vom Vortag wird in 15 Minuten ein vollwertiges Essen.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 20,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 2.1,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 120, "einheit": "g", "name": "Reis (roh) – oder 300 g gekochter Reis vom Vortag", "key": "reis" },
+        { "menge": 3, "einheit": "", "name": "Eier", "key": "eier" },
+        { "menge": 300, "einheit": "g", "name": "TK-Gemüse (Erbsen, Karotten, Broccoli)", "key": "erbsen" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 1, "einheit": "Zehe", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 2, "einheit": "EL", "name": "Sojasauce", "key": "sojasauce", "basis": true },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Falls du keinen Reis vom Vortag hast: Reis wie auf der Packung kochen, auf einem Teller ausbreiten und mindestens 30 Minuten abkühlen lassen (warmer Reis wird matschig).",
+        "Zwiebel und Knoblauch fein hacken. Eier in einer Tasse verquirlen.",
+        "1 EL Öl in einer grossen Pfanne bei hoher Hitze erwärmen. Zwiebel 2 Minuten anbraten, dann das gefrorene Gemüse dazugeben und 4–5 Minuten braten, bis es heiss ist.",
+        "Gemüse an den Rand schieben, in der Mitte 1 EL Öl dazugeben und die Eier hineingiessen. Kurz stocken lassen und dann zu Rührei zerteilen.",
+        "Reis und Knoblauch dazugeben und alles 3–4 Minuten unter Rühren braten, bis der Reis heiss ist und leicht knistert.",
+        "Mit Sojasauce würzen, umrühren und sofort servieren."
+      ],
+      "tipps": "Gekochter Reis gehört innerhalb von 2 Stunden in den Kühlschrank und sollte nach spätestens 2 Tagen gegessen werden. Reste von Poulet oder Schinken passen auch hinein.",
+      "tags": ["schnell", "resteverwertung"]
+    },
+    {
+      "id": "ofen-lachs",
+      "titel": "Lachs aus dem Ofen mit Kartoffeln & Broccoli",
+      "beschreibung": "Gesunder Fisch, ganz einfach im Ofen – kein Anbraten, kein Spritzen.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 40,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 5.6,
+      "ernaehrung": ["alles"],
+      "zutaten": [
+        { "menge": 250, "einheit": "g", "name": "Lachsfilets (TK, 2 Stück)", "key": "lachs" },
+        { "menge": 600, "einheit": "g", "name": "Kartoffeln", "key": "kartoffeln" },
+        { "menge": 400, "einheit": "g", "name": "Broccoli (frisch oder TK)", "key": "broccoli" },
+        { "menge": 1, "einheit": "", "name": "Zitrone", "key": "zitronen" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt", "key": "joghurt" },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz, Pfeffer, Kräuter", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Den gefrorenen Lachs am Vorabend in der Verpackung auf einem Teller im Kühlschrank auftauen lassen.",
+        "Ofen auf 200 °C Umluft vorheizen. Kartoffeln waschen, in ca. 2 cm grosse Würfel schneiden, auf einem Blech mit Backpapier mit 1 EL Öl und Salz mischen. 20 Minuten backen.",
+        "Broccoli in kleine Röschen schneiden (TK-Broccoli direkt verwenden). Lachs mit Küchenpapier trocken tupfen, salzen und pfeffern.",
+        "Blech herausnehmen. Broccoli und Lachs zu den Kartoffeln legen, alles mit 1 EL Öl beträufeln. Zitrone halbieren, eine Hälfte in Scheiben schneiden und auf den Lachs legen.",
+        "Weitere 12–15 Minuten backen. Der Lachs ist gar, wenn er sich mit einer Gabel leicht zerteilen lässt und innen nicht mehr glasig ist.",
+        "Joghurt mit dem Saft der zweiten Zitronenhälfte, Salz und Kräutern verrühren und als Sauce dazu servieren."
+      ],
+      "tipps": "Lachs liefert Omega-3-Fette – 1–2 Mal Fisch pro Woche ist ideal. Statt Lachs geht auch ein günstigeres Fischfilet (z.B. Pangasius oder Seelachs).",
+      "tags": ["ofen", "fisch", "omega-3"]
+    },
+    {
+      "id": "kuerbissuppe",
+      "titel": "Cremige Kürbissuppe",
+      "beschreibung": "Saisonal, günstig und wärmend – im Herbst und Winter ist Kürbis oft in Aktion.",
+      "kategorie": "Suppe",
+      "portionen": 4,
+      "zeit_min": 35,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 1.6,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 1, "einheit": "kg", "name": "Kürbis (z.B. Butternuss oder Hokkaido)", "key": "kuerbis" },
+        { "menge": 2, "einheit": "", "name": "Karotten", "key": "karotten" },
+        { "menge": 1, "einheit": "", "name": "Kartoffel (mittelgross)", "key": "kartoffeln" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 100, "einheit": "ml", "name": "Milch oder Halbrahm", "key": "milch" },
+        { "menge": 4, "einheit": "Scheiben", "name": "Vollkornbrot dazu", "key": "brot" },
+        { "menge": 1, "einheit": "l", "name": "Wasser mit 2 TL Gemüsebouillon", "key": "gewuerze", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz, Pfeffer, Muskat", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Kürbis vorbereiten: Butternuss mit dem Sparschäler schälen (Hokkaido muss nicht geschält werden), halbieren, Kerne mit einem Löffel herauskratzen und in ca. 3 cm grosse Würfel schneiden.",
+        "Karotten und Kartoffel schälen und klein würfeln. Zwiebel hacken.",
+        "Öl in einem grossen Topf erwärmen und die Zwiebel 3 Minuten dünsten. Kürbis, Karotten und Kartoffel dazugeben und 2 Minuten mitdünsten.",
+        "Mit dem Wasser auffüllen, Bouillon dazugeben, aufkochen und mit Deckel ca. 20 Minuten köcheln, bis alles weich ist (eine Gabel gleitet leicht hinein).",
+        "Topf vom Herd nehmen und die Suppe mit dem Stabmixer fein pürieren. Vorsicht, heiss – den Mixer erst einschalten, wenn er im Topf ist.",
+        "Milch einrühren, mit Salz, Pfeffer und einer Prise Muskat abschmecken. Mit Brot servieren."
+      ],
+      "tipps": "Hält 4 Tage im Kühlschrank und lässt sich gut einfrieren. Ein paar geröstete Kürbiskerne oder Nüsse obendrauf machen sie noch besser.",
+      "tags": ["saisonal", "meal-prep", "guenstig"]
+    },
+    {
+      "id": "thunfisch-bohnen-salat",
+      "titel": "Thunfisch-Bohnen-Salat",
+      "beschreibung": "Ohne Kochen, aus Vorratszutaten, in 10 Minuten fertig – ideal als Lunch zum Mitnehmen.",
+      "kategorie": "Salat",
+      "portionen": 2,
+      "zeit_min": 10,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 2.6,
+      "ernaehrung": ["alles"],
+      "zutaten": [
+        { "menge": 1, "einheit": "Dose", "name": "Thunfisch in Wasser (155 g)", "key": "thunfisch" },
+        { "menge": 1, "einheit": "Dose", "name": "Weisse Bohnen oder Kidneybohnen (400 g)", "key": "bohnen" },
+        { "menge": 1, "einheit": "Dose", "name": "Mais (285 g)", "key": "mais" },
+        { "menge": 1, "einheit": "", "name": "Peperoni oder ½ Gurke", "key": "peperoni" },
+        { "menge": 0.5, "einheit": "", "name": "Zwiebel (am besten rot)", "key": "zwiebeln" },
+        { "menge": 2, "einheit": "Scheiben", "name": "Vollkornbrot dazu", "key": "brot" },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Essig oder Zitronensaft, 1 TL Senf, Salz, Pfeffer", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Bohnen und Mais in ein Sieb geben und gut abspülen. Thunfisch abtropfen lassen.",
+        "Peperoni (oder Gurke) in kleine Würfel schneiden, Zwiebel sehr fein hacken.",
+        "Für das Dressing Öl, Essig, Senf, Salz und Pfeffer in einer grossen Schüssel verrühren.",
+        "Alle Zutaten in die Schüssel geben, mit einer Gabel den Thunfisch zerteilen und alles gut mischen. Mit Brot servieren."
+      ],
+      "tipps": "Hält im Kühlschrank 2 Tage – perfekt für das Mittagessen im Büro. Rund 35 g Eiweiss pro Portion.",
+      "tags": ["schnell", "ohne-kochen", "proteinreich", "meal-prep"]
+    },
+    {
+      "id": "poulet-curry",
+      "titel": "Einfaches Poulet-Curry mit Reis",
+      "beschreibung": "Mild, cremig und mit viel Gemüse. Mit Joghurt statt Kokosmilch – leichter und günstiger.",
+      "kategorie": "Hauptgericht",
+      "portionen": 3,
+      "zeit_min": 30,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 3.6,
+      "ernaehrung": ["alles"],
+      "zutaten": [
+        { "menge": 300, "einheit": "g", "name": "Pouletbrust", "key": "poulet" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 1, "einheit": "Zehe", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 1, "einheit": "", "name": "Peperoni", "key": "peperoni" },
+        { "menge": 200, "einheit": "g", "name": "TK-Broccoli", "key": "broccoli" },
+        { "menge": 1, "einheit": "Dose", "name": "Gehackte Tomaten (400 g)", "key": "tomaten" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt", "key": "joghurt" },
+        { "menge": 200, "einheit": "g", "name": "Reis", "key": "reis" },
+        { "menge": 1, "einheit": "EL", "name": "Currypulver, Salz", "key": "gewuerze", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Reis aufsetzen: 200 g Reis mit 400 ml Wasser und etwas Salz aufkochen, Deckel drauf, Hitze auf die kleinste Stufe und 15 Minuten quellen lassen.",
+        "Zwiebel und Knoblauch hacken. Peperoni würfeln. Poulet in mundgerechte Stücke schneiden (danach Hände und Brett waschen).",
+        "Öl in einer grossen Pfanne bei mittlerer bis hoher Hitze erwärmen. Poulet 4–5 Minuten anbraten, bis es rundum weiss ist. Herausnehmen und auf einen Teller legen.",
+        "In derselben Pfanne Zwiebel, Knoblauch und Peperoni 3 Minuten dünsten. Currypulver dazugeben und 30 Sekunden mitrösten, bis es duftet.",
+        "Tomaten und Broccoli dazugeben, 8 Minuten köcheln. Poulet zurück in die Pfanne geben und 3 Minuten mitkochen.",
+        "Pfanne vom Herd nehmen und erst dann den Joghurt einrühren (bei starker Hitze flockt er aus). Mit Salz abschmecken und mit dem Reis servieren."
+      ],
+      "tipps": "Wer es schärfer mag, gibt eine Prise Chili dazu. Statt Poulet gehen auch Kichererbsen.",
+      "tags": ["proteinreich", "meal-prep"]
+    },
+    {
+      "id": "ofenkartoffeln-kraeuterquark",
+      "titel": "Ofenkartoffeln mit Kräuterquark",
+      "beschreibung": "Knusprige Kartoffeln und frischer Quark – ein günstiges Schweizer Lieblingsessen.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 50,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 1.9,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 800, "einheit": "g", "name": "Kartoffeln", "key": "kartoffeln" },
+        { "menge": 250, "einheit": "g", "name": "Magerquark", "key": "quark" },
+        { "menge": 3, "einheit": "EL", "name": "Milch", "key": "milch" },
+        { "menge": 1, "einheit": "Zehe", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 1, "einheit": "", "name": "Gurke oder Salat dazu", "key": "gurke" },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": 2, "einheit": "EL", "name": "Schnittlauch/Kräuter (frisch oder TK)", "key": "kraeuter", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz, Pfeffer, Paprika", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Ofen auf 200 °C Umluft vorheizen. Ein Blech mit Backpapier belegen.",
+        "Kartoffeln gründlich waschen (Schale bleibt dran) und längs in Spalten schneiden.",
+        "Kartoffelspalten mit Öl, Salz und Paprika mischen und mit Abstand aufs Blech legen (nicht übereinander, sonst werden sie nicht knusprig).",
+        "30–35 Minuten backen, nach der Hälfte einmal wenden. Sie sind fertig, wenn sie goldbraun sind und ein Messer leicht hineingleitet.",
+        "Währenddessen Quark mit Milch glatt rühren. Knoblauch fein hacken oder pressen, mit den Kräutern unterrühren und mit Salz und Pfeffer würzen.",
+        "Kartoffeln mit dem Kräuterquark und Gurkenscheiben oder Salat servieren."
+      ],
+      "tipps": "Der Quark liefert viel Eiweiss – zusammen mit den Kartoffeln ein vollwertiges Essen. Für mehr Protein Hüttenkäse dazu.",
+      "tags": ["ofen", "guenstig", "proteinreich"]
+    },
+    {
+      "id": "kichererbsen-pfanne",
+      "titel": "Kichererbsen-Gemüse-Pfanne",
+      "beschreibung": "Pflanzliches Eiweiss, viel Gemüse und orientalische Gewürze – fertig in 20 Minuten.",
+      "kategorie": "Hauptgericht",
+      "portionen": 2,
+      "zeit_min": 20,
+      "schwierigkeit": "sehr einfach",
+      "kosten_portion": 2.3,
+      "ernaehrung": ["alles", "vegetarisch", "vegan"],
+      "zutaten": [
+        { "menge": 1, "einheit": "Dose", "name": "Kichererbsen (400 g)", "key": "kichererbsen" },
+        { "menge": 1, "einheit": "", "name": "Zucchetti", "key": "zucchetti" },
+        { "menge": 1, "einheit": "", "name": "Peperoni", "key": "peperoni" },
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 1, "einheit": "Zehe", "name": "Knoblauch", "key": "knoblauch" },
+        { "menge": 1, "einheit": "Dose", "name": "Gehackte Tomaten (400 g)", "key": "tomaten" },
+        { "menge": 150, "einheit": "g", "name": "Naturjoghurt (vegan: weglassen)", "key": "joghurt" },
+        { "menge": 150, "einheit": "g", "name": "Reis oder 2 Fladenbrote", "key": "reis" },
+        { "menge": 2, "einheit": "TL", "name": "Paprika, Kreuzkümmel, Salz, Pfeffer", "key": "gewuerze", "basis": true },
+        { "menge": 1, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true }
+      ],
+      "schritte": [
+        "Falls du Reis dazu willst: zuerst aufsetzen (Reis mit doppelter Menge Wasser und Salz aufkochen, zugedeckt 15 Minuten auf kleinster Stufe quellen lassen).",
+        "Kichererbsen in einem Sieb abspülen. Zwiebel und Knoblauch hacken, Zucchetti und Peperoni in kleine Würfel schneiden.",
+        "Öl in einer grossen Pfanne bei mittlerer Hitze erwärmen. Zwiebel 2 Minuten dünsten, dann Zucchetti und Peperoni 5 Minuten mitbraten.",
+        "Knoblauch, Kichererbsen und Gewürze dazugeben und 2 Minuten braten.",
+        "Tomaten dazugeben und 8 Minuten köcheln lassen, bis die Sauce etwas eingedickt ist. Mit Salz und Pfeffer abschmecken.",
+        "Mit einem Klecks Joghurt und Reis oder Fladenbrot servieren."
+      ],
+      "tipps": "Ein Spritzer Zitrone oder frische Petersilie macht das Gericht noch frischer. Hält 3 Tage im Kühlschrank.",
+      "tags": ["schnell", "vegetarisch", "guenstig"]
+    },
+    {
+      "id": "minestrone",
+      "titel": "Minestrone (italienische Gemüsesuppe)",
+      "beschreibung": "Ein grosser Topf voller Gemüse, Bohnen und Pasta – eine komplette Mahlzeit für mehrere Tage.",
+      "kategorie": "Suppe",
+      "portionen": 4,
+      "zeit_min": 40,
+      "schwierigkeit": "einfach",
+      "kosten_portion": 1.7,
+      "ernaehrung": ["alles", "vegetarisch"],
+      "zutaten": [
+        { "menge": 1, "einheit": "", "name": "Zwiebel", "key": "zwiebeln" },
+        { "menge": 2, "einheit": "", "name": "Karotten", "key": "karotten" },
+        { "menge": 1, "einheit": "Stange", "name": "Lauch", "key": "lauch" },
+        { "menge": 2, "einheit": "", "name": "Kartoffeln", "key": "kartoffeln" },
+        { "menge": 1, "einheit": "", "name": "Zucchetti", "key": "zucchetti" },
+        { "menge": 1, "einheit": "Dose", "name": "Weisse Bohnen (400 g)", "key": "bohnen" },
+        { "menge": 1, "einheit": "Dose", "name": "Gehackte Tomaten (400 g)", "key": "tomaten" },
+        { "menge": 100, "einheit": "g", "name": "Kleine Pasta (z.B. Hörnli)", "key": "pasta" },
+        { "menge": 40, "einheit": "g", "name": "Reibkäse", "key": "kaese" },
+        { "menge": 1.2, "einheit": "l", "name": "Wasser mit 2 TL Gemüsebouillon", "key": "gewuerze", "basis": true },
+        { "menge": 2, "einheit": "EL", "name": "Öl", "key": "oel", "basis": true },
+        { "menge": null, "einheit": "", "name": "Salz, Pfeffer", "key": "gewuerze", "basis": true }
+      ],
+      "schritte": [
+        "Gemüse vorbereiten: Zwiebel hacken. Karotten und Kartoffeln schälen und in kleine Würfel (ca. 1 cm) schneiden. Lauch längs halbieren, gut waschen (zwischen den Schichten ist oft Erde) und in Streifen schneiden. Zucchetti würfeln.",
+        "Öl in einem grossen Topf erwärmen. Zwiebel, Karotten und Lauch 5 Minuten dünsten.",
+        "Kartoffeln, Tomaten, Wasser und Bouillon dazugeben, aufkochen und 15 Minuten köcheln.",
+        "Bohnen abspülen und zusammen mit Zucchetti und Pasta dazugeben. Weitere 10 Minuten köcheln, bis die Pasta weich ist. Ab und zu umrühren.",
+        "Mit Salz und Pfeffer abschmecken und mit Reibkäse bestreut servieren."
+      ],
+      "tipps": "Die Pasta saugt beim Stehen Flüssigkeit auf – beim Aufwärmen einfach etwas Wasser dazugeben. Fast jedes Gemüse aus dem Kühlschrank passt hinein.",
+      "tags": ["meal-prep", "guenstig", "resteverwertung"]
+    }
+  ]
+}
