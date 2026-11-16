@@ -11,6 +11,8 @@ gesunden **Anfänger-Rezepten**, deinen **eigenen Rezepten** und **Einstellungen
 | 🏷️ **Aktionen** | Alle aktuellen Lebensmittel-Aktionen deiner Läden mit Preis, Normalpreis, Rabatt, Gültigkeit und Gesundheits-Bewertung (🟢🟢🟢). Filter nach Laden, Kategorie, Suche, «nur gesunde». |
 | 🍲 **Rezepte** | 16 einfache, gesunde und günstige Anfänger-Rezepte mit Schritt-für-Schritt-Anleitung, Portionen-Rechner, Kochmodus, «Zutaten auf die Liste» und Hinweis, welche Zutaten gerade in Aktion sind. Dazu «Küchen-Basics» für Anfänger. |
 | 📖 **Meine** | Deine eigenen Rezepte: selbst schreiben, **Text einfügen** (wird automatisch erkannt) oder **per Link importieren** (Fooby, Betty Bossi, Migusto, Swissmilk u.v.m.). Favoriten, Suche, Bearbeiten. |
+| 📸 **Rezept → Einkauf** | Rezept als Foto (kostenlose Texterkennung direkt im Browser), Text oder Link schicken – pro Zutat die passenden Produkte wählen (Aktion, Eigenmarke, lokale Metzgerei) und auf die Liste setzen. |
+| 🥩 **Fleisch lokal** | Metzgereien, Hofläden und Bauernhöfe in deiner Nähe (von Claude anhand deiner PLZ recherchiert, alle 30 Tage geprüft) plus die besten Fleisch-Aktionen. |
 | ⚙️ **Einstellungen** | Läden, Ernährung, Unverträglichkeiten, «mag ich nicht», Ziele, Haushalt & Budget, Kochniveau, Lieblingsküchen, Design – und **«Wünsche an Claude»**. Login für Sync zwischen Handy und PC, Export/Import. |
 
 ## So bleibt alles aktuell
@@ -45,6 +47,8 @@ Deine Einstellungen & Wünsche ──▶ Tabelle «einstellungen»
 
 Ohne Login funktioniert alles auch – Liste und Rezepte bleiben dann nur in diesem Browser.
 Zum Handy: Seite im Browser öffnen → *Zum Home-Bildschirm hinzufügen*.
+Die App funktioniert auch **offline** (z.B. im Laden ohne Empfang): Liste, Rezepte und die zuletzt geladenen
+Aktionen bleiben verfügbar, Änderungen werden synchronisiert, sobald wieder Internet da ist.
 
 ## Grenzen & Hinweise
 

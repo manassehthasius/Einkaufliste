@@ -160,11 +160,42 @@ const S = {
 /* Datenzugriff: Supabase wenn angemeldet, sonst lokal im Browser      */
 /* ------------------------------------------------------------------ */
 
+// Offline-Unterstützung: Änderungen ohne Netz werden gemerkt und später synchronisiert
+const istNetzfehler = (e) => !navigator.onLine || e instanceof TypeError || /failed to fetch|network|load failed|fetch/i.test(e?.message || "");
+const cacheKey = (t) => `cache_${t}_${S.user?.id}`;
+function inWarteschlange(op) {
+  lokal.set("warteschlange", [...lokal.get("warteschlange", []), { ...op, user: S.user.id }]);
+}
+function lokalesObjekt(tabelle, id) {
+  return (tabelle === "einkaufsliste" ? S.liste : S.meine).find((z) => z.id === id) || { id };
+}
+async function warteschlangeAbarbeiten() {
+  if (!S.user || !navigator.onLine) return;
+  const q = lokal.get("warteschlange", []);
+  if (!q.length) return;
+  const rest = [];
+  let erledigt = 0;
+  for (const op of q) {
+    if (op.user !== S.user.id) continue;
+    const res = op.typ === "neu" ? await sb.from(op.t).upsert(op.zeilen)
+      : op.typ === "aendern" ? await sb.from(op.t).update(op.patch).eq("id", op.id)
+      : await sb.from(op.t).delete().in("id", op.ids);
+    if (res.error && istNetzfehler(res.error)) rest.push(op);
+    else { erledigt++; if (res.error) console.error(res.error); }
+  }
+  lokal.set("warteschlange", rest);
+  if (erledigt) toast("Offline-Änderungen synchronisiert ✓");
+}
+
 const db = {
   async liste(tabelle) {
     if (!S.user) return lokal.get(tabelle, []);
     const { data, error } = await sb.from(tabelle).select("*").order("erstellt_am", { ascending: true });
-    if (error) throw error;
+    if (error) {
+      if (istNetzfehler(error)) return lokal.get(cacheKey(tabelle), []);
+      throw error;
+    }
+    lokal.set(cacheKey(tabelle), data);
     return data;
   },
   async neu(tabelle, zeilen) {
@@ -175,8 +206,13 @@ const db = {
       lokal.set(tabelle, [...alle, ...neu]);
       return neu;
     }
+    zeilen = zeilen.map((z) => ({ id: uuid(), ...z }));
     const { data, error } = await sb.from(tabelle).insert(zeilen).select();
-    if (error) throw error;
+    if (error) {
+      if (!istNetzfehler(error)) throw error;
+      inWarteschlange({ typ: "neu", t: tabelle, zeilen });
+      return zeilen.map((z) => ({ erstellt_am: new Date().toISOString(), ...z }));
+    }
     return data;
   },
   async aendern(tabelle, id, patch) {
@@ -186,7 +222,11 @@ const db = {
       return alle.find((z) => z.id === id);
     }
     const { data, error } = await sb.from(tabelle).update(patch).eq("id", id).select().single();
-    if (error) throw error;
+    if (error) {
+      if (!istNetzfehler(error)) throw error;
+      inWarteschlange({ typ: "aendern", t: tabelle, id, patch });
+      return { ...lokalesObjekt(tabelle, id), ...patch };
+    }
     return data;
   },
   async loeschen(tabelle, ids) {
@@ -197,7 +237,10 @@ const db = {
       return;
     }
     const { error } = await sb.from(tabelle).delete().in("id", ids);
-    if (error) throw error;
+    if (error) {
+      if (!istNetzfehler(error)) throw error;
+      inWarteschlange({ typ: "loeschen", t: tabelle, ids });
+    }
   },
 };
 
@@ -224,6 +267,14 @@ async function ladeAktionen() {
   S.aktionen = alle;
   const { data: meta } = await sb.from("meta").select("value").eq("key", "aktionen_stand").maybeSingle();
   S.aktionenStand = meta?.value ?? null;
+  lokal.set("cache_aktionen", { aktionen: alle, stand: S.aktionenStand });
+}
+function aktionenAusCache() {
+  const c = lokal.get("cache_aktionen", null);
+  if (!c) return false;
+  S.aktionen = c.aktionen.filter((a) => !a.gueltig_bis || a.gueltig_bis >= heuteISO());
+  S.aktionenStand = c.stand;
+  return true;
 }
 
 async function ladeOeffentlich() {
@@ -232,7 +283,10 @@ async function ladeOeffentlich() {
     fetch("data/grundsortiment.json").then((r) => r.json()).catch(() => ({ artikel: [] })),
     sb.from("rezepte_vorschlaege").select("*").then((r) => r.data ?? []),
     sb.from("grundsortiment").select("*").then((r) => r.data ?? []),
-    ladeAktionen().catch((e) => { console.error(e); toast("Aktionen konnten nicht geladen werden"); }),
+    ladeAktionen().catch((e) => {
+      console.error(e);
+      toast(aktionenAusCache() ? "Offline – Aktionen vom letzten Abruf" : "Aktionen konnten nicht geladen werden");
+    }),
   ]);
   const claudeIds = new Set(claudeRez.map((r) => r.id));
   S.rezepte = [
@@ -249,13 +303,14 @@ async function ladePrivat() {
     [S.liste, S.meine] = await Promise.all([db.liste("einkaufsliste"), db.liste("meine_rezepte")]);
   } catch (e) { fehlerZeigen(e, "Deine Daten konnten nicht geladen werden"); }
   if (S.user) {
-    const { data } = await sb.from("einstellungen").select("*").eq("user_id", S.user.id).maybeSingle();
-    if (data) {
+    const { data, error } = await sb.from("einstellungen").select("*").eq("user_id", S.user.id).maybeSingle();
+    if (error) console.error(error);
+    else if (data) {
       S.einst = { ...STANDARD, ...data.daten };
       S.meta = { wuensche: data.wuensche ?? "", claude_nachricht: data.claude_nachricht, claude_sync_am: data.claude_sync_am, sync_angefordert: data.sync_angefordert, aktualisiert_am: data.aktualisiert_am };
       lokal.set("einstellungen", S.einst);
     } else {
-      await speichereEinstellungen(false);
+      await speichereEinstellungen(false).catch(console.error);
     }
   }
   await ladeLokaleLaeden();
@@ -1453,7 +1508,8 @@ function render() {
     einkauf: () => viewPlan(),
     fleisch: () => viewFleisch(),
   };
-  app.innerHTML = (views[seite] || views.liste)();
+  const offline = navigator.onLine ? "" : `<div class="hinweis gelb">📴 Offline – du siehst den letzten Stand. Änderungen an der Liste werden gespeichert und synchronisiert, sobald du wieder Internet hast.</div>`;
+  app.innerHTML = offline + (views[seite] || views.liste)();
   const titel = { liste: "Einkaufsliste", aktionen: "Aktionen", rezepte: "Rezepte", rezept: "Rezept", meine: "Meine Rezepte", neu: "Neues Rezept", bearbeiten: "Rezept bearbeiten", einstellungen: "Einstellungen", basics: "Küchen-Basics", einkauf: "Rezept → Einkauf", fleisch: "Fleisch lokal" }[seite] || "Einkaufsliste";
   document.title = `${titel} · Einkaufsliste`;
 }
@@ -1786,6 +1842,15 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
+window.addEventListener("offline", () => render());
+window.addEventListener("online", async () => {
+  await warteschlangeAbarbeiten();
+  if (S.user) { try { [S.liste, S.meine] = await Promise.all([db.liste("einkaufsliste"), db.liste("meine_rezepte")]); } catch { /* egal */ } }
+  if (!S.aktionen.length || S.aktionenStand) { try { await ladeAktionen(); baueIndex(); } catch { /* egal */ } }
+  render();
+});
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => { /* ohne Offline-Modus weiter */ });
+
 (async function start() {
   wendeDesignAn();
   render();
@@ -1793,6 +1858,7 @@ sb.auth.onAuthStateChange(async (event, session) => {
   S.user = data.session?.user ?? null;
   if (location.hash.includes("access_token")) history.replaceState(null, "", location.pathname + "#/einstellungen");
   if (S.user && (lokal.get("einkaufsliste", []).length || lokal.get("meine_rezepte", []).length)) await lokaleDatenHochladen();
+  await warteschlangeAbarbeiten().catch(console.error);
   await Promise.all([ladeOeffentlich(), ladePrivat()]);
   baueIndex();
   S.geladen = true;
